@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 def media(num, lista):
     with open(f'{lista}.csv', mode='r') as csvfile:
         reader = csv.DictReader(csvfile)
-        numero2 = [row for row in reader if row['Ponto'] == str(num)]
-    contagem_linha = len(numero2)
+        numero2 = [row for row in reader if row['Ponto'] == str(num)]  #aqui ele tranforma as rows em uma lista de lista, sendo cada elemento {'Ponto':'12', 'concentracao':'10.0'}
+    contagem_linha = len(list(numero2))
     soma_concentracao = sum(float(row['concentracao']) for row in numero2)
     media = soma_concentracao / contagem_linha
     print(f"Media do {num}: {media}")
@@ -16,7 +16,9 @@ def maior(nome):
     with open(f'{nome}.csv', mode='r') as csvfile:
         reader = csv.DictReader(csvfile)
         numMaior = max(reader, key=lambda row: float(row['concentracao']))
-    print(f"O Ponto com maior Concentracao e:\n {numMaior}")
+    print(f"O Ponto com maior Concentracao e:")
+    for key, value in numMaior.items():
+        print(f"{key}: {value}")
 
 def juntar(lista, lista2):              #Funcao para concatenar dois arquivos csv
     with open(f'{lista}.csv', mode='r') as csvfile1:
