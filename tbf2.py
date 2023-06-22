@@ -1,7 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
 
-#Esta salvando como string nao float, na opcao 6 n deve imprimir como lista, mas como ????. Trocar o sistema colocar td vez o nome do arquivo para uma opcao que seleciona o arquivo que deseja ser mexido
 
 def media(num, lista):
     with open(f'{lista}.csv', mode='r') as csvfile:
@@ -15,8 +14,9 @@ def media(num, lista):
 def maior(nome):
     with open(f'{nome}.csv', mode='r') as csvfile:
         reader = csv.DictReader(csvfile)
-        numMaior = max(reader, key=lambda row: float(row['concentracao']))
+        numMaior = max(reader, key=lambda row: float(row['concentracao']))      #aqui ele salva o ponto com maior concentracao cna forma de lista
     print(f"O Ponto com maior Concentracao e:")
+    print(numMaior)
     for key, value in numMaior.items():
         print(f"{key}: {value}")
 
@@ -38,11 +38,9 @@ def juntar(lista, lista2):              #Funcao para concatenar dois arquivos cs
         writer.writerows(combined_data)
 
 nome = input("Insira o nome do arquivo csv que deseja: ")  #Antes de poder entrar no loop, escolhemos qual arquivo queremos usar, casa quisermos trocar depois podemos utilizar a 4 opcao
-
-while True:
+escolha1 =''
+while escolha1.lower() !='fim':
     escolha1 = input("1 - Novo registro\n2 - N novos registros\n3 - Calcular propriedades\n4 - Gravar em arquivo\n5 - Carregar de arquivo\n6 - Visualizar registros\n7 - Criar Novo Arquivo csv\nDigite uma opção ou FIM para sair: ")
-    if escolha1.lower() == 'fim':
-        break                     #Aqui ele termina o loop, .lower() transforma as letras maiusculas em minusculas
 
     if escolha1 == '1' or escolha1 == '2':
         while True:                       #este outro loop serve para a segunda opcao, para o usuario conseguir colocar n numeros de registros
@@ -84,17 +82,17 @@ while True:
 
     elif escolha1 == '5':
         nome2 = input("Insira o nome do arquivo que deseja implementar na lista escolhida: ")
-        juntar(nome, nome2)
+        juntar(nome, nome2)         #concatena duas listas salvando na primeira
         
 
     elif escolha1 == '4':
-        nome = input("Insira o arquivo que deseja abrir: ")
+        nome = input("Insira o arquivo que deseja abrir: ")         #aqui troca o arquivo que sera utilizado
 
-    elif escolha1 == '7':
+    elif escolha1 == '7':       #Cria um novo arquivo csv
         nome = input("Insira o nome do arquivo que deseja criar: ")
         with open(f'{nome}.csv', mode='w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['Ponto', 'concentracao'])
 
-    else:
+    elif escolha1.lower() != 'fim':
         print("Numero invalido")
