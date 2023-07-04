@@ -1,3 +1,6 @@
+import csv
+
+
 def novoDado(ponto, conc):
     novo = []
     novo.append(ponto)
@@ -46,6 +49,7 @@ escolha = ''
 
 while escolha.lower() != 'fim':
     escolha = input("1 - Novo registro\n2 - N novos registros\n3 - Calcular propriedades\n4 - Gravar em arquivo\n5 - Carregar de arquivo\n6 - Visualizar registros\nDigite uma opção ou FIM para sair: ")
+
     if escolha == '1':
         ponto = int(input("Insira o ponto: "))
         conc = int(input("Insira a concentracao: "))
@@ -54,6 +58,7 @@ while escolha.lower() != 'fim':
             matriz.append(novo)
         else:
             print('Ponto ou concentracao invalida')
+
     if escolha == '2':
         while escolha != 'fim':
             ponto = int(input("Insira o ponto: "))
@@ -65,8 +70,10 @@ while escolha.lower() != 'fim':
                 print('Ponto ou concentracao invalida')
             escolha = input("Digite 'fim' se deseja parar de insiri novos dados: ")
         escolha=''
+
     if escolha == '6':
         printar(matriz)
+
     if escolha =='3':
         media(matriz, 7)
         media(matriz, 37)
@@ -74,4 +81,21 @@ while escolha.lower() != 'fim':
         media(matriz, 39)
         media(matriz, 62)
         maior(matriz)
-        
+
+    if escolha =='4':
+        nome = input('Insira o nome do arquivo que deseja criar: ') + '.csv'
+        with open(nome, 'w', newline='') as arquivo_csv:
+            escritor = csv.writer(arquivo_csv)
+            for linha in matriz:
+                escritor.writerow(linha)
+        matriz=[]
+    
+    if escolha =='5':
+        nome = input('Insira o nome do arquivo que deseja adicionar a atual matriz: ') + '.csv'
+        with open(nome, 'r') as arquivo_csv:
+            leitor = csv.reader(arquivo_csv)
+            i=0
+            for linha in leitor:
+                if i !=0:
+                    matriz.append(linha)
+                i+=1
