@@ -9,11 +9,11 @@ def novoDado(ponto, conc):
 
 def printar(matriz):
     tam = len(matriz)
-    i=0
-    while i<tam:
-        print(matriz[i][0], end='  ')
-        print(matriz[i][1])
-        i+=1
+    contador=0
+    while contador<tam:
+        print(matriz[contador][0], end='  ')
+        print(matriz[contador][1])
+        contador+=1
 def media(matriz,ponto):
     tam = len(matriz)-1
     i=0
@@ -94,8 +94,8 @@ while escolha.lower() != 'fim':
         nome = input('Insira o nome do arquivo que deseja adicionar a atual matriz: ') + '.csv'
         with open(nome, 'r') as arquivo_csv:
             leitor = csv.reader(arquivo_csv)
-            i=0
+            contador=0
             for linha in leitor:
-                if i !=0:
+                if contador !=0:
                     matriz.append(linha)
-                i+=1
+                contador+=1
