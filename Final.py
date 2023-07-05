@@ -15,22 +15,20 @@ def printar(matriz):
         print(matriz[contador][1])
         contador+=1
 def media(matriz,ponto):
-    tam = len(matriz)-1
-    i=0
+    divisor=0
     soma = 0
-    while tam>=0:
-        if matriz[tam][0] == ponto:
-            soma = soma + matriz[tam][1]
-            i+=1
-        tam-=1
-    if soma !=0:
-        media = soma/i
+    for linha in matriz:
+        if linha[0] == ponto:
+            soma += linha[1]
+            divisor += 1
+    if divisor !=0:
+        media = soma/divisor
         print(f"A media do ponto {ponto}: {media}")
 
 def maior(matriz):
     tam = len(matriz)-1
     maiorconc = 0
-    while tam>=0:
+    while tam>0:
         if matriz[tam][1]>maiorconc:
             maiorconc = matriz[tam][1]
             maiorponto = matriz[tam][0]
@@ -75,12 +73,13 @@ while escolha.lower() != 'fim':
         printar(matriz)
 
     if escolha =='3':
+        #print(matriz)
         media(matriz, 7)
         media(matriz, 37)
         media(matriz, 38)
         media(matriz, 39)
         media(matriz, 62)
-        maior(matriz)
+        #maior(matriz)
 
     if escolha =='4':
         nome = input('Insira o nome do arquivo que deseja criar: ') + '.csv'
