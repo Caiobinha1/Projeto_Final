@@ -14,30 +14,38 @@ def printar(matriz):
         print(matriz[contador][0], end='  ')
         print(matriz[contador][1])
         contador+=1
+
 def media(matriz,ponto):
-    divisor=0
+    divisor = 0
     soma = 0
-    for linha in matriz:
-        if linha[0] == ponto:
-            soma += linha[1]
+    i = 0
+    while i < len(matriz):
+        if i != 0 and int(matriz[i][0]) == ponto:
+            soma += float(matriz[i][1])
             divisor += 1
-    if divisor !=0:
-        media = soma/divisor
-        print(f"A media do ponto {ponto}: {media}")
+        i += 1
+    if divisor != 0:
+        media = soma / divisor
+        print(f"A média do ponto {ponto}: {media:.2f}")
+    else:
+        print(f"Não foi encontrado nenhum valor para o ponto {ponto}.")
 
 def maior(matriz):
-    tam = len(matriz)-1
+    tam = len(matriz) - 1
     maiorconc = 0
-    while tam>0:
-        if matriz[tam][1]>maiorconc:
-            maiorconc = matriz[tam][1]
-            maiorponto = matriz[tam][0]
-        tam-=1
-    print(f'O ponto com a maior concentracao e: {maiorponto}, com a concentracao de: {maiorconc}')
-        
-
-
-
+    maiorponto = 0
+    i = 1
+    if tam == 0:
+        print("Nao possui nenhum Dado!")
+    else: 
+        while i <= tam:
+            conc = float(matriz[i][1])
+            if conc > maiorconc:
+                maiorconc = conc
+                maiorponto = int(matriz[i][0])
+            i += 1
+        print(f"O ponto com a maior concentração é: {maiorponto}, com a concentração de: {maiorconc}")
+            
 
 
 Titulo = ['Ponto', 'concentracao']
@@ -60,7 +68,7 @@ while escolha.lower() != 'fim':
     if escolha == '2':
         while escolha != 'fim':
             ponto = int(input("Insira o ponto: "))
-            conc = int(input("Insira a concentracao: "))
+            conc = float(input("Insira a concentracao: "))
             if (ponto in [7, 38, 39, 62]) and  conc >= 0: 
                 novo = novoDado(ponto, conc)
                 matriz.append(novo)
@@ -73,13 +81,12 @@ while escolha.lower() != 'fim':
         printar(matriz)
 
     if escolha =='3':
-        #print(matriz)
         media(matriz, 7)
         media(matriz, 37)
         media(matriz, 38)
         media(matriz, 39)
         media(matriz, 62)
-        #maior(matriz)
+        maior(matriz)
 
     if escolha =='4':
         nome = input('Insira o nome do arquivo que deseja criar: ') + '.csv'
