@@ -1,13 +1,13 @@
 import csv
 
 
-def novoDado(ponto, conc):
+def novoDado(ponto, conc):          # Esta funcao sera usado para a escolha 1 e 2 do programa
     novo = []
     novo.append(ponto)
     novo.append(conc)
-    return novo
+    return novo                     # Retorna uma matriz que sera adicionada a matriz principal 
 
-def printar(matriz):
+def printar(matriz):                # Esta funcao sera usada para a escolha 6, para nao aparecer em formato de matriz printamos uma de cada vez
     tam = len(matriz)
     contador=0
     while contador<tam:
@@ -15,22 +15,22 @@ def printar(matriz):
         print(matriz[contador][1])
         contador+=1
 
-def media(matriz,ponto):
+def media(matriz,ponto):            # Esta funcao sera usada na escolha 3, onde ira receber a matriz e calcular a media de cada ponto e printar o resultado
     divisor = 0
     soma = 0
     i = 0
     while i < len(matriz):
-        if i != 0 and int(matriz[i][0]) == ponto:
+        if i != 0 and int(matriz[i][0]) == ponto:   # Tivemos que adicionar o int() e float(), porque quando estavamos trazendo dados de um arquivo csv (Funcao 5), ele salva na matriz como string.
             soma += float(matriz[i][1])
             divisor += 1
         i += 1
     if divisor != 0:
-        media = soma / divisor
-        print(f"A média do ponto {ponto}: {media:.2f}")
+        media = soma / divisor              
+        print(f"A média do ponto {ponto}: {media:.2f}")         #A dicionamos o .2f para printar apenas 2 casas depois da virgula a media
     else:
         print(f"Não foi encontrado nenhum valor para o ponto {ponto}.")
 
-def maior(matriz):
+def maior(matriz):          # Esta funcao sera usada na escolha 3, onde ira receber a matriz e ira descobrir qual a maior concetracao e salva-la, tambem salva o ponto para printar
     tam = len(matriz) - 1
     maiorconc = 0
     maiorponto = 0
@@ -39,7 +39,7 @@ def maior(matriz):
         print("Nao possui nenhum Dado!")
     else: 
         while i <= tam:
-            conc = float(matriz[i][1])
+            conc = float(matriz[i][1])      # Novamente tivemos que transformar os itens da matriz em int e float
             if conc > maiorconc:
                 maiorconc = conc
                 maiorponto = int(matriz[i][0])
@@ -48,25 +48,25 @@ def maior(matriz):
             
 
 
-Titulo = ['Ponto', 'concentracao']
+Titulo = ['Ponto', 'concentracao']      # Com intuito de nao criar uma funcao apenas para adicionar o titulo, adicionamos antes do loop principal
 matriz= []
 matriz.append(Titulo)
 escolha = ''
 
-while escolha.lower() != 'fim':
+while escolha.lower() != 'fim':         # Adicionamos o .lower() para nao precisar adicionar "or" para cada situacao possivel
     escolha = input("1 - Novo registro\n2 - N novos registros\n3 - Calcular propriedades\n4 - Gravar em arquivo\n5 - Carregar de arquivo\n6 - Visualizar registros\nDigite uma opção ou FIM para sair: ")
 
     if escolha == '1':
         ponto = int(input("Insira o ponto: "))
         conc = int(input("Insira a concentracao: "))
-        if (ponto in [7, 38, 39, 62]) and  conc >= 0: 
+        if (ponto in [7, 38, 39, 62]) and  conc >= 0:   # Checa se os dados fornecidos sao validos
             novo = novoDado(ponto, conc)
-            matriz.append(novo)
+            matriz.append(novo)                         # Adiciona o ponto e concentracao na matriz
         else:
             print('Ponto ou concentracao invalida')
 
     if escolha == '2':
-        while escolha != 'fim':
+        while escolha.lower() != 'fim':     # Este while possibilita que adicionemos n dados novos utilizando a mesma funcao da 1 opcao
             ponto = int(input("Insira o ponto: "))
             conc = float(input("Insira a concentracao: "))
             if (ponto in [7, 38, 39, 62]) and  conc >= 0: 
@@ -74,34 +74,33 @@ while escolha.lower() != 'fim':
                 matriz.append(novo)
             else:
                 print('Ponto ou concentracao invalida')
-            escolha = input("Digite 'fim' se deseja parar de insiri novos dados: ")
-        escolha=''
+            escolha = input("Digite 'fim' se deseja parar de inserir novos dados: ")
+        escolha=''      # Ele esvazia a variavel para que nao termine o loop principal
 
     if escolha == '6':
         printar(matriz)
 
     if escolha =='3':
-        media(matriz, 7)
-        media(matriz, 37)
-        media(matriz, 38)
-        media(matriz, 39)
-        media(matriz, 62)
+        pontos = [7, 37, 38, 39, 62]        # Para nao chamar indivudualmente a funcao para cada ponto, utilizamos este for para chamar todas
+        for ponto in pontos:
+            media(matriz, ponto)
         maior(matriz)
 
     if escolha =='4':
         nome = input('Insira o nome do arquivo que deseja criar: ') + '.csv'
-        with open(nome, 'w', newline='') as arquivo_csv:
-            escritor = csv.writer(arquivo_csv)
+        with open(nome, 'w', newline='') as arquivo_csv:        # Abre o arquivo csv para escrita ('w')
+            escritor = csv.writer(arquivo_csv)                  # Cria um 'escritor' que consegue escrever em um arquivo csv
             for linha in matriz:
-                escritor.writerow(linha)
-        matriz=[]
+                escritor.writerow(linha)                        # Esreve linha por linha no arquivo csv
+        matriz=[]                                               # Aqui esvaziamos a matriz, pois como ja foi exportada para um arquivo, podemos utilizar a func 5 para pegar de volta os dados
+        matriz.append(Titulo)
     
     if escolha =='5':
         nome = input('Insira o nome do arquivo que deseja adicionar a atual matriz: ') + '.csv'
-        with open(nome, 'r') as arquivo_csv:
-            leitor = csv.reader(arquivo_csv)
+        with open(nome, 'r') as arquivo_csv:                    # Abre o arquivo csv para leitura ('r')
+            leitor = csv.reader(arquivo_csv)                    # Cria um 'leitor' que consegue trazer dados de um arquivo csv
             contador=0
             for linha in leitor:
-                if contador !=0:
-                    matriz.append(linha)
+                if contador !=0:                                # Este contador serve para nao trazer o titulo das colunas, porque ele ja foi colocado no comeco do codigo
+                    matriz.append(linha)                        # Adiciona linha por linha os dados do csv na matriz do programa
                 contador+=1
