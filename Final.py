@@ -57,8 +57,8 @@ while escolha.lower() != 'fim':         # Adicionamos o .lower() para nao precis
     escolha = input("1 - Novo registro\n2 - N novos registros\n3 - Calcular propriedades\n4 - Gravar em arquivo\n5 - Carregar de arquivo\n6 - Visualizar registros\nDigite uma opção ou FIM para sair: ")
 
     if escolha == '1':
-        ponto = int(input("Insira o ponto: "))
-        conc = int(input("Insira a concentracao: "))
+        ponto = int(input("Informe o número do ponto: "))
+        conc = int(input("Informe a concentração de E. coli: "))
         if (ponto in [7, 38, 39, 62]) and  conc >= 0:   # Checa se os dados fornecidos sao validos
             novo = novoDado(ponto, conc)
             matriz.append(novo)                         # Adiciona o ponto e concentracao na matriz
@@ -66,22 +66,21 @@ while escolha.lower() != 'fim':         # Adicionamos o .lower() para nao precis
             print('Ponto ou concentracao invalida')
 
     if escolha == '2':
-        while escolha.lower() != 'fim':     # Este while possibilita que adicionemos n dados novos utilizando a mesma funcao da 1 opcao
-            ponto = int(input("Insira o ponto: "))
-            conc = float(input("Insira a concentracao: "))
+        while escolha.lower() != 'ok':     # Este while possibilita que adicionemos n dados novos utilizando a mesma funcao da 1 opcao
+            ponto = int(input("Informe o número do ponto: "))
+            conc = float(input("Informe a concentração de E. coli: "))
             if (ponto in [7, 38, 39, 62]) and  conc >= 0: 
                 novo = novoDado(ponto, conc)
                 matriz.append(novo)
             else:
                 print('Ponto ou concentracao invalida')
-            escolha = input("Digite 'fim' se deseja parar de inserir novos dados: ")
-        escolha=''      # Ele esvazia a variavel para que nao termine o loop principal
+            escolha = input("Pressione qualquer tecla para inserir mais um registro ou OK para retornar: ")
 
     if escolha == '6':
         printar(matriz)
 
     if escolha =='3':
-        pontos = [7, 37, 38, 39, 62]        # Para nao chamar indivudualmente a funcao para cada ponto, utilizamos este for para chamar todas
+        pontos = [7, 38, 39, 62]        # Para nao chamar indivudualmente a funcao para cada ponto, utilizamos este for para chamar todas
         for ponto in pontos:
             media(matriz, ponto)
         maior(matriz)
